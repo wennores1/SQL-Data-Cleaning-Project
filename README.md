@@ -23,15 +23,15 @@ ROW_NUMBER() OVER(
 PARTITION BY company, location, industry, total_laid_off, percentage_laid_off, `date`, ...
 ) AS row_num
 FROM layoffs_staging;
-
-2. Standardizing Data
+```
+### 2. Standardizing Data
 I found several inconsistencies in the text data that needed fixing:
 Company Names: Used TRIM() to remove unnecessary whitespace.
 Industries: Standardized distinct values (e.g., merging "Crypto Currency" and "CryptoCurrency" into just "Crypto").
 Countries: Fixed data entry errors, such as removing a trailing period from "United States.".
 Date Format: Converted the date column from a string (text) format to a standard SQL DATE format using STR_TO_DATE.
 
-3. Handling Null & Missing Values
+### 3. Handling Null & Missing Values
 This was the most complex part of the cleaning process.
 Populating Missing Data: I identified companies with missing industry data. I used a Self-Join to look up if the same company had the industry populated in another row and filled the null values accordingly.
 Removing Useless Data: Rows where both total_laid_off and percentage_laid_off were NULL provided no value for the analysis, so they were removed.
@@ -43,11 +43,11 @@ SET t1.industry = t2.industry
 WHERE t1.industry IS NULL
 AND t2.industry IS NOT NULL;
 
-4. Final Cleanup
+### 4. Final Cleanup
 Removed the helper columns used for the cleaning process (like row_num).
 The final table is now optimized and clean for Exploratory Data Analysis (EDA).
 
-🚀 Skills Demonstrated
+### Skills Demonstrated
 Window Functions: ROW_NUMBER()
 Joins: Self-Join for populating missing data.
 CTEs: Using Common Table Expressions to organize complex queries.
