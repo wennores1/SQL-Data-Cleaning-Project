@@ -46,12 +46,12 @@ WHERE t1.industry IS NULL
 AND t2.industry IS NOT NULL;
 ```
 ### 4. Final Cleanup
-Removed the helper columns used for the cleaning process (like row_num).
-The final table is now optimized and clean for Exploratory Data Analysis (EDA).
+* Removed the helper columns used for the cleaning process (like row_num).
+* The final table is now optimized and clean for Exploratory Data Analysis (EDA).
 
 ### Skills Demonstrated
-Window Functions: ROW_NUMBER()
-Joins: Self-Join for populating missing data.
-CTEs: Using Common Table Expressions to organize complex queries.
-Data Type Casting: Converting text to date formats.
-Staging Tables: Creating temporary tables to preserve raw data integrity.
+* **Window Functions:** ROW_NUMBER()
+* **Joins:** Self-Join for populating missing data.
+* **CTEs:** Using Common Table Expressions to organize complex queries.
+* **Data Type Casting:** Converting text to date formats.
+* **Staging Tables:** Creating temporary tables to preserve raw data integrity.
