@@ -26,15 +26,17 @@ FROM layoffs_staging;
 ```
 ### 2. Standardizing Data
 I found several inconsistencies in the text data that needed fixing:
-Company Names: Used TRIM() to remove unnecessary whitespace.
-Industries: Standardized distinct values (e.g., merging "Crypto Currency" and "CryptoCurrency" into just "Crypto").
-Countries: Fixed data entry errors, such as removing a trailing period from "United States.".
-Date Format: Converted the date column from a string (text) format to a standard SQL DATE format using STR_TO_DATE.
+* **Company Names:** Used TRIM() to remove unnecessary whitespace.
+* **Industries:** Standardized distinct values (e.g., merging "Crypto Currency" and "CryptoCurrency" into just "Crypto").
+* **Countries:** Fixed data entry errors, such as removing a trailing period from "United States.".
+* **Date Format:** Converted the date column from a string (text) format to a standard SQL DATE format using STR_TO_DATE.
 
 ### 3. Handling Null & Missing Values
 This was the most complex part of the cleaning process.
-Populating Missing Data: I identified companies with missing industry data. I used a Self-Join to look up if the same company had the industry populated in another row and filled the null values accordingly.
-Removing Useless Data: Rows where both total_laid_off and percentage_laid_off were NULL provided no value for the analysis, so they were removed.
+* **Populating Missing Data:** I identified companies with missing industry data. I used a Self-Join to look up if the same company had the industry populated in another row and filled the null values accordingly.
+* **Removing Useless Data:** Rows where both total_laid_off and percentage_laid_off were NULL provided no value for the analysis, so they were removed.
+
+```sql
 -- Logic to populate null industries based on existing data
 UPDATE layoffs_staging2 t1
 JOIN layoffs_staging2 t2
@@ -42,7 +44,7 @@ JOIN layoffs_staging2 t2
 SET t1.industry = t2.industry
 WHERE t1.industry IS NULL
 AND t2.industry IS NOT NULL;
-
+```
 ### 4. Final Cleanup
 Removed the helper columns used for the cleaning process (like row_num).
 The final table is now optimized and clean for Exploratory Data Analysis (EDA).
